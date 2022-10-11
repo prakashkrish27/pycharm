@@ -1,0 +1,16 @@
+import pandas as pd
+import psycopg2 as pg
+import mysql.connector as sql
+from tabulate import tabulate
+src_conn = sql.connect(host="source.c74pc9qqlwja.us-east-1.rds.amazonaws.com", database = 'source',user="admin", passwd="admin2727",use_pure=True)
+tgt_conn = pg.connect(host="target.c74pc9qqlwja.us-east-1.rds.amazonaws.com", dbname = 'target',user="postgres", password="admin2727")
+df_src = pd.read_sql_query('select * from EMPLOYEE;',con=src_conn)
+df_source = pd.DataFrame(df_src)
+df_tgt = pd.read_sql_query('select EMPID as EMPNO, INCENTIVE_DATE, INCENTIVE_AMOUNT from incentives;',con=tgt_conn)
+df_target = pd.DataFrame(df_tgt)
+src_tgt_merge = pd.merge(left=df_source,right=df_target,how='left',left_on='EMPNO',right_on='empno')
+src_tgt_merge['rnk'] = src_tgt_merge.sort_values(['incentive_amount'],ascending=False).groupby(['DEPTNAME']).cumcount()+1
+print(tabulate(src_tgt_merge, headers='keys', tablefmt='pretty', showindex=False))
+
+#df.to_csv(r'C:\Users\Prakash.Krishnan\OneDrive - ACS Solutions\Desktop\emp.csv', index=False)
+#print("Records are exported into csv file")
