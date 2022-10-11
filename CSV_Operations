@@ -1,0 +1,17 @@
+import pandas as pd
+from pandas import DataFrame
+from tabulate import tabulate
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', 1000)
+pd.set_option('display.colheader_justify', 'center')
+df_src = pd.read_csv('C:/Users/Prakash.Krishnan/OneDrive - ACS Solutions/Desktop/PyCharm/Source/employees.csv')
+df_emp = pd.DataFrame(df_src)
+#print(tabulate(df_emp, headers='keys', tablefmt='pretty', showindex=False))
+df_tgt = pd.read_csv('C:/Users/Prakash.Krishnan/OneDrive - ACS Solutions/Desktop/PyCharm/Source/department.csv')
+df_dept = pd.DataFrame(df_tgt)
+#print(tabulate(df_dept, headers='keys', tablefmt='pretty', showindex=False))
+df_inner_join = pd.merge(left=df_emp,right=df_dept,how='left',left_on='DEPARTMENT_ID',right_on='DEPARTMENT_ID')
+df_inner_join['rnk'] = df_inner_join.sort_values(['SALARY'],ascending=False).groupby(df_inner_join['DEPARTMENT_NAME']).cumcount()+1
+df_inner_join['den_rnk'] = df_inner_join['SALARY'].groupby(df_inner_join['DEPARTMENT_NAME']).rank(method='dense')
+print(tabulate(df_inner_join[['DEPARTMENT_ID','DEPARTMENT_NAME','SALARY','rnk','den_rnk']].sort_values(by=['DEPARTMENT_NAME','rnk','den_rnk'],ascending=True), headers='keys', tablefmt='pretty', showindex=False))
