@@ -1,0 +1,19 @@
+import pandas as pd
+import psycopg2 as pg
+import mysql.connector as sql
+from tabulate import tabulate
+import numpy as np
+src_conn = sql.connect(host="source.c74pc9qqlwja.us-east-1.rds.amazonaws.com", database = 'source',user="admin", passwd="admin2727",use_pure=True)
+tgt_conn = pg.connect(host="target.c74pc9qqlwja.us-east-1.rds.amazonaws.com", dbname = 'target',user="postgres", password="admin2727")
+df_src = pd.read_sql_query('select EMPNO,ENAME,MGR,HIREDATE,SAL,DEPTNAME from EMPLOYEE;',con=src_conn)
+df_tgt = pd.read_sql_query('select empno as EMPNO,ename as ENAME,mgr as MGR,hiredate as HIREDATE,sal as SAL,deptname as DEPTNAME from EMPLOYEE;',con=tgt_conn)
+df_source = pd.DataFrame(df_src)
+df_target = pd.DataFrame(df_tgt)
+print("Source Data Count",df_source.shape[0])
+print("Target Data Count",df_target.shape[0])
+print('*********** DATA VALIDATION ***************')
+
+src_min_tgt = df_source.merge(df_target,indicator=True,how='left',left_on='EMPNO',right_on='EMPNO')
+print(src_min_tgt)
+#print(df_source.compare(df_target))
+#print(df_target.compare(df_source))
