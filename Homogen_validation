@@ -1,0 +1,16 @@
+import mysql.connector as sql
+import pandas as pd
+
+conn = sql.connect(host="source.c74pc9qqlwja.us-east-1.rds.amazonaws.com", database = 'source',user="admin", passwd="admin2727",use_pure=True)
+#query = "select emp_id, name , salary, dept_id, dense_rank() over(partition by dept_id order by salary desc)r_num from sample.emp_salary;"
+#df_emp = pd.read_sql(query,conn)
+#print(df_emp)
+
+source = "select * from source.EMPLOYEE;"
+df_src = pd.read_sql(source,conn)
+target = "select * from source.EMPLOYEE;"
+df_tgt = pd.read_sql(target,conn)
+
+#source Minus Target
+print(df_src.compare(df_tgt))
+print(df_tgt.compare(df_src))
