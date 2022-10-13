@@ -24,3 +24,4 @@ for line in f:
     with pd.ExcelWriter('C:/Users/Prakash.Krishnan/OneDrive - ACS Solutions/Desktop/PyCharm/output.xlsx', mode='a',
                         engine='openpyxl', if_sheet_exists='replace') as writer:
         df_source.to_excel(writer, sheet_name='sheet1', index=False)
+https://www.codegrepper.com/code-examples/python/pandas+to+excel+append+to+existing+sheet
