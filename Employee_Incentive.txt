@@ -1,0 +1,153 @@
+--------- Source Query (MySQL)---------------
+
+create table source.EMPLOYEE
+(
+  EMPNO    int not null,
+  ENAME    VARCHAR(10),
+  MGR      int,
+  HIREDATE DATE,
+  SAL      int,
+  DEPTNAME VARCHAR(10)
+);
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (1, 'SMITH', 3, STR_TO_DATE('17-12-1980', '%d-%m-%Y'), 800, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (2, 'ALLEN', 4, STR_TO_DATE('20-02-1981', '%d-%m-%Y'), 1600, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (3, 'WARD', null, STR_TO_DATE('22-02-1981', '%d-%m-%Y'), 1250, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (4, 'JONES', null, STR_TO_DATE('02-04-1981', '%d-%m-%Y'), 2975, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (5, 'MARTIN', 4, STR_TO_DATE('28-09-1981', '%d-%m-%Y'), 1250, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (6, 'BLAKE', 7, STR_TO_DATE('01-05-1981', '%d-%m-%Y'), 2850, 'SERVICES');
+
+insert into EMPLOYEE (EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (7, 'CLARK', null, STR_TO_DATE('09-06-1981', '%d-%m-%Y'), 2450, 'SERVICES');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (8, 'SCOTT', 4, STR_TO_DATE('09-12-1982', '%d-%m-%Y'), 3000, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (9, 'KING', 3, STR_TO_DATE('17-11-1981', '%d-%m-%Y'), 5000, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (10, 'TURNER', 4, STR_TO_DATE('08-09-1981', '%d-%m-%Y'), 1500, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (11, 'ADAMS', 3, STR_TO_DATE('12-01-1983', '%d-%m-%Y'), 1100, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (12, 'JAMES', 7, STR_TO_DATE('03-12-1981', '%d-%m-%Y'), 950, 'SERVICES');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (13, 'FORD', 4, STR_TO_DATE('03-12-1981', '%d-%m-%Y'), 3000, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (14, 'MILLER', 4, STR_TO_DATE('23-01-1982', '%d-%m-%Y'), 1300, 'INSURANCE');
+
+
+create table INCENTIVES
+(
+  EMPID            INTEGER,
+  INCENTIVE_DATE   DATE,
+  INCENTIVE_AMOUNT INTEGER
+);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (1, STR_TO_DATE('01-02-2019', '%d-%m-%Y'), 5000.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (2, STR_TO_DATE('06-02-2019', '%d-%m-%Y'), 3000.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (3, STR_TO_DATE('07-02-2019', '%d-%m-%Y'), 4000.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (1, STR_TO_DATE('01-01-2019', '%d-%m-%Y'), 4500.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (2, STR_TO_DATE('04-01-2019', '%d-%m-%Y'), 3500.00);
+
+--------- Target Query (Postgres)---------------
+
+create table INCENTIVES
+(
+  EMPID            INTEGER,
+  INCENTIVE_DATE   DATE,
+  INCENTIVE_AMOUNT INTEGER
+);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (1, to_date('01-02-2019', 'dd-mm-yyyy'), 5000.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (2, to_date('06-02-2019', 'dd-mm-yyyy'), 3000.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (3, to_date('07-02-2019', 'dd-mm-yyyy'), 4000.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (1, to_date('01-01-2019', 'dd-mm-yyyy'), 4500.00);
+
+insert into INCENTIVES (EMPID, INCENTIVE_DATE, INCENTIVE_AMOUNT)
+values (2, to_date('04-01-2019', 'dd-mm-yyyy'), 3500.00);
+
+create table source.EMPLOYEE
+(
+  EMPNO    int not null,
+  ENAME    VARCHAR(10),
+  MGR      int,
+  HIREDATE DATE,
+  SAL      int,
+  DEPTNAME VARCHAR(10)
+);
+
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (1, 'SMITH', 3, to_date('17-12-1980', 'dd-mm-yyyy'), 800, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (2, 'ALLEN', 4, to_date('20-02-1981', 'dd-mm-yyyy'), 1600, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (3, 'WARD', null, to_date('22-02-1981', 'dd-mm-yyyy'), 1250, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (4, 'JONES', null, to_date('02-04-1981', 'dd-mm-yyyy'), 2975, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (5, 'MARTIN', 4, to_date('28-09-1981', 'dd-mm-yyyy'), 1250, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (6, 'BLAKE', 7, to_date('01-05-1981', 'dd-mm-yyyy'), 2850, 'SERVICES');
+
+insert into EMPLOYEE (EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (7, 'CLARK', null, to_date('09-06-1981', 'dd-mm-yyyy'), 2450, 'SERVICES');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (8, 'SCOTT', 4, to_date('09-12-1982', 'dd-mm-yyyy'), 3000, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (9, 'KING', 3, to_date('17-11-1981', 'dd-mm-yyyy'), 5000, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (10, 'TURNER', 4, to_date('08-09-1981', 'dd-mm-yyyy'), 1500, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (11, 'ADAMS', 3, to_date('12-01-1983', 'dd-mm-yyyy'), 1100, 'BANKING');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (12, 'JAMES', 7, to_date('03-12-1981', 'dd-mm-yyyy'), 950, 'SERVICES');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (13, 'FORD', 4, to_date('03-12-1981', 'dd-mm-yyyy'), 3000, 'INSURANCE');
+
+insert into EMPLOYEE(EMPNO, ENAME, MGR, HIREDATE, SAL, DEPTNAME)
+values (14, 'MILLER', 4, to_date('23-01-1982', 'dd-mm-yyyy'), 1300, 'INSURANCE');
